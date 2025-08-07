@@ -1,0 +1,185 @@
+DOCUMENTACIÓN DEL PROYECTO AVN PERÚ
+1. INFORMACIÓN GENERAL
+Proyecto: AVN PERÚ - Sitio Web ISP
+Cliente: Alta Velocidad Network Perú
+Ubicación: Ventanilla, Callao
+Estilo: Premium Minimal Tech (inspirado en Stripe/Linear)
+Estado: En desarrollo - Estructura definida
+2. ESPECIFICACIONES DE DISEÑO
+Colores:
+- Primary: #0055FF (azul)
+- Text Primary: #000000
+- Text Secondary: #666666
+- Background: #FFFFFF
+- Background Gray: #FAFAFA
+- Border: #E5E5E5
+
+Tipografía:
+- Font Family: Inter (Google Fonts)
+- Headings: 800 weight
+- Body: 400-500 weight
+
+Espaciado:
+- Container max: 1200px
+- Padding sections: 120px vertical, 40px horizontal
+- Card radius: 16-20px
+3. ESTRUCTURA DE PÁGINAS
+Homepage (index.html)
+
+Loading screen (1.5s)
+Navigation fixed
+Hero con speed widget
+Trust bar (4 métricas)
+Features (6 cards)
+Plans (3 cards)
+Coverage preview
+Testimonials
+FAQ
+CTA final
+Footer
+
+Páginas internas
+
+/planes.html - Comparativa detallada
+/cobertura.html - Mapa interactivo
+/soporte.html - Centro de ayuda
+/empresa.html - Sobre nosotros
+/contacto.html - Formulario contacto
+/contratar.html - Proceso 3 pasos
+
+4. COMPONENTES REUTILIZABLES
+html<!-- Navigation -->
+<nav class="nav-fixed">...</nav>
+
+<!-- Speed Widget -->
+<div class="speed-widget">...</div>
+
+<!-- Plan Card -->
+<div class="plan-card">...</div>
+
+<!-- Feature Card -->
+<div class="feature-card">...</div>
+
+<!-- CTA Button -->
+<a class="btn-primary">...</a>
+5. FUNCIONALIDADES JavaScript
+
+Loading Screen
+
+Fade out después de 1.5s
+Prevenir scroll durante carga
+
+
+Speed Widget
+
+Animación contador (0-200)
+Actualización métricas cada 5s
+Efecto hover glow
+
+
+Smooth Scroll
+
+Enlaces ancla suaves
+Offset para nav fixed
+
+
+Form Validation
+
+Validación en tiempo real
+Mensajes de error custom
+Prevenir submit si hay errores
+
+
+Animations
+
+Fade in on scroll
+Parallax suave en hero
+Hover effects en cards
+
+
+
+6. PASOS PARA CONTINUAR EL DESARROLLO
+FASE 1: HTML Base (Current)
+
+ Definir estructura
+ Crear index.html con todas las secciones
+ Crear páginas internas vacías
+ Agregar contenido placeholder
+
+FASE 2: CSS Styling
+
+ Crear main.css con estilos base
+ Implementar diseño responsive
+ Agregar animations.css
+ Optimizar para mobile
+
+FASE 3: JavaScript
+
+ Implementar loading screen
+ Crear speed widget interactivo
+ Agregar smooth scroll
+ Validación de formularios
+
+FASE 4: Contenido
+
+ Reemplazar texto placeholder
+ Agregar imágenes reales
+ Crear iconos SVG
+ Optimizar assets
+
+FASE 5: Optimización
+
+ Minificar CSS/JS
+ Comprimir imágenes
+ Agregar meta tags SEO
+ Testing cross-browser
+
+FASE 6: Backend (Opcional)
+
+ Migrar a PHP si necesario
+ Configurar envío emails
+ Integrar base de datos
+ Panel admin
+
+7. CÓDIGO BASE PARA EMPEZAR
+html<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVN PERÚ - Internet de Alta Velocidad</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Estructura aquí -->
+    <script src="js/main.js"></script>
+</body>
+</html>
+css/* css/main.css */
+:root {
+    --primary: #0055FF;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --bg-white: #FFFFFF;
+    --bg-gray: #FAFAFA;
+    --border: #E5E5E5;
+}
+javascript// js/main.js
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('AVN PERÚ - Iniciando...');
+});
+8. NOTAS IMPORTANTES
+
+Mobile First: Diseñar primero para móvil
+Performance: Mantener página < 3MB
+Accesibilidad: Alt texts, ARIA labels
+SEO: URLs amigables, meta descriptions
+Analytics: Preparar para GA4
+
+9. RECURSOS
+
+Logo: Pendiente diseño SVG
+Iconos: Usar Feather Icons o crear custom
+Imágenes: Unsplash para placeholders
+Fonts: Google Fonts (Inter)

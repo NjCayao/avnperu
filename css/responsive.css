@@ -1,0 +1,251 @@
+/* =====================
+   Responsive Design
+===================== */
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 30px;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .features-grid,
+    .plans-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .coverage-content {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Navigation Mobile */
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: var(--white);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        padding: 20px 0;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-item {
+        margin: 15px 0;
+    }
+
+    .nav-cta {
+        display: none;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .nav-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Hero Mobile */
+    .hero {
+        padding: 80px 0 40px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1.25rem, 4vw, 2rem);
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .speed-widget {
+        padding: 30px;
+        margin: 30px auto;
+    }
+
+    .speed-number {
+        font-size: 48px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Trust Bar Mobile */
+    .trust-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .trust-number {
+        font-size: 2rem;
+    }
+
+    /* Features Mobile */
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-card {
+        padding: 30px;
+    }
+
+    /* Plans Mobile */
+    .plans-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .plan-card.featured {
+        transform: scale(1);
+    }
+
+    /* Coverage Mobile */
+    .coverage-form {
+        padding: 30px;
+    }
+
+    .zones-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* Testimonials Mobile */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* FAQ Mobile */
+    .faq-question {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    /* CTA Mobile */
+    .form-inline {
+        flex-direction: column;
+    }
+
+    .form-inline .form-input,
+    .form-inline .btn {
+        width: 100%;
+    }
+
+    /* Footer Mobile */
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .footer-legal {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .trust-container {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+/* Large Desktop (min-width: 1440px) */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1320px;
+    }
+
+    .hero-title {
+        font-size: 5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 3rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .hero-buttons,
+    .cta-section,
+    .footer-social {
+        display: none !important;
+    }
+
+    body {
+        color: #000;
+        background: #fff;
+    }
+
+    .section-title,
+    .plan-name,
+    .feature-title {
+        color: #000;
+    }
+
+    .plan-card {
+        break-inside: avoid;
+    }
+}

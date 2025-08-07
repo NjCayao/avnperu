@@ -1,0 +1,318 @@
+/* Loading Screen Styles */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Fondo con efecto de ondas */
+.loading-screen::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.03) 0%, transparent 50%);
+    animation: pulseWave 4s ease-in-out infinite;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes pulseWave {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(2); opacity: 1; }
+}
+
+.glitch-wrapper {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Título con efecto 3D y resplandor */
+.glitch {
+    font-size: 72px;
+    font-weight: 800;
+    text-transform: uppercase;
+    position: relative;
+    color: #0066FF;
+    letter-spacing: 3px;
+    animation: glitch 2s infinite;
+    text-shadow: 
+        0 0 10px rgba(0, 102, 255, 0.5),
+        0 0 20px rgba(0, 102, 255, 0.3),
+        0 0 30px rgba(0, 102, 255, 0.1);
+    margin: 0;
+    line-height: 1;
+}
+
+.glitch::before,
+.glitch::after {
+    content: 'AVN PERÚ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    background: transparent;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: #00FFFF;
+    z-index: -1;
+    mix-blend-mode: screen;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: #FF00FF;
+    z-index: -2;
+    mix-blend-mode: screen;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        text-shadow: -2px 0 #00FFFF, 2px 0 #FF00FF;
+    }
+    50% {
+        text-shadow: 2px 0 #00FFFF, -2px 0 #FF00FF;
+    }
+}
+
+@keyframes glitch-1 {
+    0%, 100% {
+        clip: rect(20px, 9999px, 40px, 0);
+        transform: translate(-2px, -2px);
+    }
+    50% {
+        clip: rect(60px, 9999px, 80px, 0);
+        transform: translate(2px, 2px);
+    }
+}
+
+@keyframes glitch-2 {
+    0%, 100% {
+        clip: rect(80px, 9999px, 90px, 0);
+        transform: translate(2px, 2px);
+    }
+    50% {
+        clip: rect(10px, 9999px, 30px, 0);
+        transform: translate(-2px, -2px);
+    }
+}
+
+/* Subtítulo con efecto de escritura futurista */
+.loading-subtitle {
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 6px;
+    margin: 20px 0 40px 0;
+    color: transparent;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(90deg, #999 25%, #0066FF 50%, #999 75%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+    text-transform: uppercase;
+}
+
+@keyframes shimmer {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+/* Partículas de datos mejoradas */
+.data-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #0066FF, transparent);
+    opacity: 0;
+    animation: dataFlow 3s linear infinite;
+    filter: blur(0.5px);
+}
+
+@keyframes dataFlow {
+    0% {
+        top: -20px;
+        opacity: 0;
+        transform: translateX(0) scale(0);
+    }
+    10% {
+        opacity: 0.8;
+        transform: translateX(0) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        top: 100vh;
+        opacity: 0;
+        transform: translateX(0) scale(0);
+    }
+}
+
+/* Indicador de velocidad estilo HUD */
+.speed-indicator {
+    margin: 20px 0;
+    font-size: 16px;
+    color: #666666;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.5s;
+    text-align: center;
+    position: relative;
+    padding: 12px 40px;
+    background: rgba(0, 102, 255, 0.05);
+    border: 1px solid rgba(0, 102, 255, 0.2);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.speed-counter {
+    color: #0066FF;
+    font-weight: 700;
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+/* Contenedor de carga estilo futurista */
+.loading-container {
+    width: 350px;
+    text-align: center;
+    position: relative;
+    margin-top: 30px;
+}
+
+/* Porcentaje con efecto de energía */
+.loading-percentage {
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #0066FF, #00FFFF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    position: relative;
+    animation: energyPulse 1s ease-in-out infinite;
+}
+
+@keyframes energyPulse {
+    0%, 100% { 
+        filter: brightness(1) drop-shadow(0 0 5px rgba(0, 102, 255, 0.5)); 
+    }
+    50% { 
+        filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 102, 255, 0.8)); 
+    }
+}
+
+/* Barra de carga con efecto de fibra óptica */
+.loading-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loading-progress {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        #0066FF 0%, 
+        #00FFFF 25%, 
+        #0066FF 50%, 
+        #00FFFF 75%, 
+        #0066FF 100%);
+    background-size: 200% 100%;
+    animation: loadProgress 3s ease-out forwards, fiberOptic 1s linear infinite;
+    border-radius: 10px;
+    position: relative;
+}
+
+@keyframes loadProgress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+@keyframes fiberOptic {
+    0% { background-position: -100% 0; }
+    100% { background-position: 100% 0; }
+}
+
+/* Efecto de luz en la punta de la barra */
+.loading-progress::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, #FFFFFF 0%, #0066FF 50%, transparent 70%);
+    border-radius: 50%;
+    animation: glow 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    0% { 
+        box-shadow: 0 0 20px rgba(0, 102, 255, 0.8), 
+                   0 0 40px rgba(0, 102, 255, 0.6);
+        transform: translateY(-50%) scale(1);
+    }
+    100% { 
+        box-shadow: 0 0 30px rgba(0, 255, 255, 1), 
+                   0 0 60px rgba(0, 255, 255, 0.8);
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* Texto de estado dinámico */
+.loading-text {
+    font-size: 14px;
+    color: #666666;
+    margin-top: 20px;
+    opacity: 0.8;
+    animation: fadeInOut 2s ease-in-out infinite;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
