@@ -27,10 +27,3 @@ avnperu/
 │   │
 │   └── fonts/
 │       └── Inter/
-│
-├── includes/           (para migracion a PHP)
-│   ├── header.php
-│   ├── footer.php
-│   └── config.php
-│
-└── .htaccess          (configuración servidor)

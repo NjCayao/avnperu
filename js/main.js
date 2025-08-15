@@ -1,50 +1,29 @@
-// =====================
-// Main JavaScript for AVN PERÚ
-// =====================
+// main.js - Funcionalidad principal AVN
 
 document.addEventListener('DOMContentLoaded', function() {
+    // FAQ Toggle functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
     
-    // =====================
-    // Navigation
-    // =====================
-    const navbar = document.getElementById('navbar');
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    // Mobile menu toggle
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        navToggle.classList.toggle('active');
-    });
-
-    // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faqItem = this.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Cerrar todos los FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Si no estaba activo, abrir este
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
         });
     });
-
-    // Navbar scroll effect
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-
-        lastScroll = currentScroll;
-    });
-
-    // =====================
-    // Smooth Scrolling
-    // =====================
+    
+    // Smooth scroll para enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             
@@ -52,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const headerOffset = 80;
                 const elementPosition = target.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
+                
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
@@ -60,272 +39,133 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // =====================
-    // Speed Widget Animation
-    // =====================
-    const speedNumber = document.querySelector('.speed-number');
-    let hasAnimated = false;
-
-    function animateSpeed() {
-        if (hasAnimated) return;
+    
+    // Header scroll effect
+    const header = document.querySelector('.header');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
         
-        let currentSpeed = 0;
-        const targetSpeed = 200;
-        const increment = 4;
-        const duration = 50;
-
-        const counter = setInterval(() => {
-            currentSpeed += increment;
-            if (currentSpeed >= targetSpeed) {
-                currentSpeed = targetSpeed;
-                clearInterval(counter);
-                hasAnimated = true;
-            }
-            speedNumber.textContent = currentSpeed;
-        }, duration);
+        if (currentScroll > 100) {
+            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+        }
+        
+        lastScroll = currentScroll;
+    });
+    
+    // Form submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            
+            // Aquí normalmente enviarías los datos a un servidor
+            console.log('Formulario enviado:', { name, phone });
+            
+            // Mostrar mensaje de éxito
+            alert('¡Gracias por tu interés! Te contactaremos pronto.');
+            
+            // Resetear formulario
+            this.reset();
+        });
     }
-
-    // Intersection Observer for animations
+    
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileMenuToggle && navMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            this.classList.toggle('active');
+            
+            // Cambiar icono
+            if (this.classList.contains('active')) {
+                this.textContent = '✕';
+            } else {
+                this.textContent = '☰';
+            }
+        });
+    }
+    
+    // Animación de números en la sección de planes
     const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '0px'
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
     };
-
-    const observer = new IntersectionObserver((entries) => {
+    
+    const animateValue = (element, start, end, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            element.textContent = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+    
+    const speedObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (entry.target.classList.contains('speed-widget')) {
-                    animateSpeed();
-                }
-                entry.target.classList.add('animate');
+                const speed = entry.target.textContent.replace('Mbps', '');
+                animateValue(entry.target, 0, parseInt(speed), 1000);
+                speedObserver.unobserve(entry.target);
             }
         });
     }, observerOptions);
-
-    // Observe elements
-    const speedWidget = document.querySelector('.speed-widget');
-    if (speedWidget) {
-        observer.observe(speedWidget);
-    }
-
-    // Observe feature cards
-    document.querySelectorAll('.feature-card').forEach(card => {
-        observer.observe(card);
+    
+    // Observar elementos de velocidad
+    document.querySelectorAll('.plan-speed').forEach(speed => {
+        speedObserver.observe(speed);
     });
-
-    // Observe plan cards
-    document.querySelectorAll('.plan-card').forEach(card => {
-        observer.observe(card);
-    });
-
-    // =====================
-    // FAQ Accordion
-    // =====================
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Close all items
-            faqItems.forEach(faq => {
-                faq.classList.remove('active');
-                faq.querySelector('.faq-question').classList.remove('active');
-            });
-            
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-                question.classList.add('active');
+    
+    // Lazy loading para imágenes
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.add('loaded');
+                imageObserver.unobserve(img);
             }
         });
     });
-
-    // =====================
-    // Form Handling
-    // =====================
-    const coverageForm = document.getElementById('coverageForm');
-    const ctaForm = document.getElementById('ctaForm');
-
-    if (coverageForm) {
-        coverageForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const address = document.getElementById('address').value;
-            
-            // Simulate coverage check
-            setTimeout(() => {
-                alert(`¡Excelente! Tenemos cobertura en tu zona.\nDirección: ${address}\n\nUn asesor te contactará pronto.`);
-                coverageForm.reset();
-            }, 500);
-        });
-    }
-
-    if (ctaForm) {
-        ctaForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const input = ctaForm.querySelector('.form-input').value;
-            
-            // Simulate form submission
-            setTimeout(() => {
-                alert(`¡Gracias por tu interés!\nVerificaremos la disponibilidad en: ${input}`);
-                ctaForm.reset();
-            }, 500);
-        });
-    }
-
-    // =====================
-    // Trust Bar Counter Animation
-    // =====================
-    const trustNumbers = document.querySelectorAll('.trust-number');
-    let trustAnimated = false;
-
-    function animateTrustNumbers() {
-        if (trustAnimated) return;
-        
-        trustNumbers.forEach(number => {
-            const target = parseInt(number.textContent.replace(/[^0-9]/g, ''));
-            const suffix = number.textContent.replace(/[0-9]/g, '');
-            let current = 0;
-            const increment = target / 50;
-            const duration = 30;
-
-            const counter = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(counter);
-                }
-                number.textContent = Math.floor(current) + suffix;
-            }, duration);
-        });
-        
-        trustAnimated = true;
-    }
-
-    // Observe trust bar
-    const trustBar = document.querySelector('.trust-bar');
-    if (trustBar) {
-        const trustObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateTrustNumbers();
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        trustObserver.observe(trustBar);
-    }
-
-    // =====================
-    // Parallax Effect
-    // =====================
-    const bgGradient = document.querySelector('.bg-gradient');
     
-    if (bgGradient) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxSpeed = 0.5;
-            bgGradient.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-        });
-    }
-
-    // =====================
-    // Lazy Loading for Images (if any)
-    // =====================
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    
-    if (lazyImages.length > 0) {
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        lazyImages.forEach(img => imageObserver.observe(img));
-    }
-
-    // =====================
-    // Plan Card Hover Effect
-    // =====================
-    const planCards = document.querySelectorAll('.plan-card');
-    
-    planCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            planCards.forEach(c => c.style.transform = 'scale(0.95)');
-            card.style.transform = 'scale(1.05)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            planCards.forEach(c => c.style.transform = 'scale(1)');
-        });
+    // Observar todas las imágenes con data-src
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
     });
-
-    // =====================
-    // Utility Functions
-    // =====================
-    
-    // Debounce function
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
-
-    // Throttle function
-    function throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
-
-    // =====================
-    // Performance Optimization
-    // =====================
-    
-    // Optimize scroll events
-    const optimizedScroll = throttle(() => {
-        // Add your scroll-based animations here
-    }, 100);
-
-    window.addEventListener('scroll', optimizedScroll);
-
-    // =====================
-    // Initialize on Load
-    // =====================
-    window.addEventListener('load', () => {
-        document.body.classList.add('loaded');
-    });
-
 });
 
-// =====================
-// Service Worker Registration (opcional)
-// =====================
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(registration => {
-            console.log('ServiceWorker registration successful');
-        }).catch(err => {
-            console.log('ServiceWorker registration failed: ', err);
-        });
-    });
+// Función para formatear números de teléfono
+function formatPhoneNumber(input) {
+    // Eliminar todos los caracteres no numéricos
+    let value = input.value.replace(/\D/g, '');
+    
+    // Formatear según la longitud
+    if (value.length <= 3) {
+        input.value = value;
+    } else if (value.length <= 6) {
+        input.value = value.slice(0, 3) + ' ' + value.slice(3);
+    } else {
+        input.value = value.slice(0, 3) + ' ' + value.slice(3, 6) + ' ' + value.slice(6, 9);
+    }
 }
+
+// Aplicar formato a inputs de teléfono
+document.querySelectorAll('input[type="tel"]').forEach(input => {
+    input.addEventListener('input', function() {
+        formatPhoneNumber(this);
+    });
+});
